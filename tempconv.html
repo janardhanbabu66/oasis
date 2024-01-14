@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Converter</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #converter {
+      text-align: center;
+    }
+
+    input, select, button {
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="converter">
+    <input type="number" id="temperature" placeholder="Enter temperature" required>
+    <select id="unit">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+      <option value="kelvin">Kelvin</option>
+    </select>
+    <button onclick="convertTemperature()">Convert</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function convertTemperature() {
+      var temperatureInput = parseFloat(document.getElementById('temperature').value);
+      var unit = document.getElementById('unit').value;
+
+      if (isNaN(temperatureInput)) {
+        alert('Please enter a valid number for temperature.');
+        return;
+      }
+
+      var convertedTemperature;
+      var resultElement = document.getElementById('result');
+
+      if (unit === 'celsius') {
+        convertedTemperature = {
+          fahrenheit: (temperatureInput * 9/5) + 32,
+          kelvin: temperatureInput + 273.15
+        };
+      } else if (unit === 'fahrenheit') {
+        convertedTemperature = {
+          celsius: (temperatureInput - 32) * 5/9,
+          kelvin: (temperatureInput - 32) * 5/9 + 273.15
+        };
+      } else {
+        convertedTemperature = {
+          celsius: temperatureInput - 273.15,
+          fahrenheit: (temperatureInput - 273.15) * 9/5 + 32
+        };
+      }
+
+      resultElement.innerHTML = `Converted Temperature:<br>
+                                  Celsius: ${convertedTemperature.celsius.toFixed(2)}°C<br>
+                                  Fahrenheit: ${convertedTemperature.fahrenheit.toFixed(2)}°F<br>
+                                  Kelvin: ${convertedTemperature.kelvin.toFixed(2)}K`;
+    }
+  </script>
+
+</body>
+</html>
